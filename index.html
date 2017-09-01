@@ -32,14 +32,22 @@
 				<p>Insira abaixo, sua url antiga e sua nova url</p>
 			</div>
 			<form>
-				<div class="col-md-6 form-group">
+				<div class="col-md-5 form-group">
 					<div class="controls">
+					<label for="exampleInputEmail1">URL antiga</label>
 						<input class="form-control" ng-model="oldString" type="text" placeholder="URL antiga">
 					</div>
 				</div>
-				<div class="col-md-6 form-group">
+				<div class="col-md-5 form-group">
 					<div class="controls">
+					<label for="exampleInputEmail1">URL nova</label>
 						<input class="form-control" ng-model="newString" type="text" placeholder="URL nova">
+					</div>
+				</div>
+				<div class="col-md-2 form-group">
+					<div class="controls" ng-init="tablePrefix = 'wp_' ">
+					<label for="exampleInputEmail1">table_prefix</label>
+						<input class="form-control" ng-model="tablePrefix" type="text" placeholder="table_prefix">
 					</div>
 				</div>
 			</form>
@@ -47,15 +55,15 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<p>Copie e cole o código no seu editor SQL e seja feliz =)</p>
 				<pre class="pre-scrollable">
-UPDATE wp_posts SET guid = replace(guid, '{{oldString}}' , '{{newString}}');
+UPDATE {{tablePrefix}}posts SET guid = replace(guid, '{{oldString}}' , '{{newString}}');
 
-UPDATE wp_posts SET post_content = replace(post_content, '{{oldString}}' , '{{newString}}');
+UPDATE {{tablePrefix}}posts SET post_content = replace(post_content, '{{oldString}}' , '{{newString}}');
 
-UPDATE wp_postmeta SET meta_value = replace(meta_value, '{{oldString}}' , '{{newString}}');
+UPDATE {{tablePrefix}}postmeta SET meta_value = replace(meta_value, '{{oldString}}' , '{{newString}}');
 
-UPDATE `wp_options` SET `option_value` = '{{newString}}' WHERE `wp_options`.`option_name` = 'siteurl';
+UPDATE `{{tablePrefix}}options` SET `option_value` = '{{newString}}' WHERE `{{tablePrefix}}options`.`option_name` = 'siteurl';
 
-UPDATE `wp_options` SET `option_value` = '{{newString}}' WHERE `wp_options`.`option_name` = 'home';
+UPDATE `{{tablePrefix}}options` SET `option_value` = '{{newString}}' WHERE `{{tablePrefix}}options`.`option_name` = 'home';
 				</pre>
 			</div>
 	</div>
